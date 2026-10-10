@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pages: write
 
 concurrency:
   group: github-pages
@@ -32,3 +33,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
           publish_branch: gh-pages
+      - name: Request website deployment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"
+      - name: Check public website
+        run: |
+          for path in '' 'museum/' 'collection/' 'panoramas/entrance.jpg' 'models/bronze-vessel.glb'; do
+            curl --fail --silent --show-error --retry 12 --retry-delay 5 --retry-all-errors \
+              --output /dev/null "https://bakhtiyarabdullayev.github.io/museum/${path}"
+          done
