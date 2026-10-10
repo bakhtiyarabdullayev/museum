@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.git/
+.vercel/
+.npm-cache/
+.env*
+*.tsbuildinfo
+scripts/
+AGENTS.md
+README.md
