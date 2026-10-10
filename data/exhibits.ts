@@ -1,4 +1,5 @@
 import { Exhibit, Localized, Category } from './types';
+import { assetPath } from '@/lib/assetPath';
 export const categories: Record<Category, Localized> = {
   carpets: { az: 'Xalçalar', en: 'Carpets' },
   weapons: { az: 'Silahlar', en: 'Weapons' },
@@ -20,7 +21,7 @@ export const exhibits: Exhibit[] = [
     period: { az: '19-cu əsr', en: '19th century' },
     category: 'carpets',
     material: { az: 'Yun, təbii boyalar', en: 'Wool, natural dyes' },
-    image: '/exhibits/carpet.jpg',
+    image: assetPath('/exhibits/carpet.jpg'),
     roomId: 'entrance',
   },
   {
@@ -37,7 +38,7 @@ export const exhibits: Exhibit[] = [
     period: { az: '18-ci əsr', en: '18th century' },
     category: 'weapons',
     material: { az: 'Polad, tunc, ağac', en: 'Steel, bronze, wood' },
-    image: '/exhibits/dagger.jpg',
+    image: assetPath('/exhibits/dagger.jpg'),
     roomId: 'history',
   },
   {
@@ -54,8 +55,8 @@ export const exhibits: Exhibit[] = [
     period: { az: '19-cu əsr', en: '19th century' },
     category: 'archaeology',
     material: { az: 'Mis və tunc — demo model', en: 'Copper and bronze — demo model' },
-    image: '/exhibits/vessel.jpg',
-    model3D: '/models/bronze-vessel.glb',
+    image: assetPath('/exhibits/vessel.jpg'),
+    model3D: assetPath('/models/bronze-vessel.glb'),
     roomId: 'culture',
   },
   {
@@ -72,7 +73,7 @@ export const exhibits: Exhibit[] = [
     period: { az: '19-cu əsr', en: '19th century' },
     category: 'clothing',
     material: { az: 'Məxmər, dekorativ sap', en: 'Velvet, decorative thread' },
-    image: '/exhibits/costume.jpg',
+    image: assetPath('/exhibits/costume.jpg'),
     roomId: 'culture',
   },
   {
@@ -89,7 +90,7 @@ export const exhibits: Exhibit[] = [
     period: { az: '12-ci əsr', en: '12th century' },
     category: 'archaeology',
     material: { az: 'Metal ərintisi', en: 'Metal alloy' },
-    image: '/exhibits/coin.jpg',
+    image: assetPath('/exhibits/coin.jpg'),
     roomId: 'history',
   },
   {
@@ -106,7 +107,7 @@ export const exhibits: Exhibit[] = [
     period: { az: 'Orta əsrlər', en: 'Middle Ages' },
     category: 'archaeology',
     material: { az: 'Bişmiş gil', en: 'Fired clay' },
-    image: '/exhibits/ceramic.jpg',
+    image: assetPath('/exhibits/ceramic.jpg'),
     roomId: 'culture',
   },
 ];

@@ -13,11 +13,12 @@ import '@photo-sphere-viewer/core/index.css';
 import '@photo-sphere-viewer/markers-plugin/index.css';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
+import { assetPath } from '@/lib/assetPath';
 export const metadata: Metadata = {
   title: { default: 'İRS — Azərbaycan Virtual Muzeyi', template: '%s · İRS Virtual Muzey' },
   description:
     'Azərbaycanın mədəni irsini 360° virtual gəzinti və interaktiv 3D eksponatlarla kəşf edin.',
-  icons: { icon: '/icon.svg' },
+  icons: { icon: assetPath('/icon.svg') },
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

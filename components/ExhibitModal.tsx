@@ -6,6 +6,7 @@ import { Exhibit } from '@/data/types';
 import { categories } from '@/data/exhibits';
 import { useLanguage } from './LanguageProvider';
 import { useModal } from './useModal';
+import { assetPath } from '@/lib/assetPath';
 type Props = {
   exhibit: Exhibit;
   onClose: () => void;
@@ -44,7 +45,7 @@ export default function ExhibitModal({
       return;
     }
     if (!audioRef.current) {
-      const audio = new Audio(`/audio/${exhibit.id}-${language}.mp3`);
+      const audio = new Audio(assetPath(`/audio/${exhibit.id}-${language}.mp3`));
       audio.onended = () => setPlaying(false);
       audio.onerror = () => {
         setPlaying(false);

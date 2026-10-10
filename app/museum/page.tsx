@@ -28,6 +28,7 @@ import { getExhibit, guidedExhibits } from '@/data/exhibits';
 import ExhibitModal from '@/components/ExhibitModal';
 import MuseumMap from '@/components/MuseumMap';
 import type { MuseumViewerHandle } from '@/components/MuseumViewer';
+import { assetPath } from '@/lib/assetPath';
 const MuseumViewer = dynamic(() => import('@/components/MuseumViewer'), { ssr: false });
 const ModelViewer = dynamic(() => import('@/components/ModelViewer'), { ssr: false });
 export default function MuseumPage() {
@@ -91,7 +92,7 @@ export default function MuseumPage() {
   }
   function toggleSound() {
     if (!ambient.current) {
-      ambient.current = new Audio('/audio/ambient.mp3');
+      ambient.current = new Audio(assetPath('/audio/ambient.mp3'));
       ambient.current.loop = true;
       ambient.current.volume = 0.25;
     }

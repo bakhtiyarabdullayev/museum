@@ -1,7 +1,10 @@
 import { chromium } from 'playwright';
 import { strict as assert } from 'node:assert';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-const base = process.env.MUSEUM_BASE_URL || 'http://localhost:3000';
+const base = (process.env.MUSEUM_BASE_URL || 'http://localhost:3000').replace(/\/$/, '');
+const routeMatches = (url, route) =>
+  new URL(url).pathname.replace(/\/$/, '') ===
+  new URL(`${base}${route}`).pathname.replace(/\/$/, '');
 const screenshots = process.env.MUSEUM_SCREENSHOTS || '/tmp/museum-smoke';
 mkdirSync(screenshots, { recursive: true });
 const browser = await chromium.launch({
@@ -80,7 +83,7 @@ try {
   await page.getByRole('button', { name: 'Azərbaycan dili', exact: true }).click();
   await page.getByRole('link', { name: 'Virtual muzeyə daxil ol', exact: true }).click();
   await roomReady();
-  check(page.url().endsWith('/museum'), 'Landing CTA enters the museum');
+  check(routeMatches(page.url(), '/museum'), 'Landing CTA enters the museum');
   check(
     (await page.locator('.room-info h1').textContent()).includes('Giriş'),
     'Entrance panorama is ready',
@@ -196,10 +199,10 @@ try {
     'Museum language switching translates room names',
   );
   await page.getByRole('link', { name: 'View collection' }).click();
-  await page.waitForURL('**/collection');
+  await page.waitForURL((url) => routeMatches(url.href, '/collection'));
   await page.locator('.exhibit-card').first().waitFor();
   await page.waitForTimeout(1000);
-  check(page.url().endsWith('/collection'), 'Museum collection shortcut navigates correctly');
+  check(routeMatches(page.url(), '/collection'), 'Museum collection shortcut navigates correctly');
   check(
     (await page.locator('h1').textContent()).includes('Every object'),
     'Language persists between routes',
@@ -273,7 +276,7 @@ try {
   await page.screenshot({ path: `${screenshots}/landing-mobile.png`, fullPage: true });
   await page.getByRole('button', { name: 'Menyunu aç' }).click();
   await page.locator('.desktop-nav').getByRole('link', { name: 'Kolleksiya', exact: true }).click();
-  await page.waitForURL('**/collection');
+  await page.waitForURL((url) => routeMatches(url.href, '/collection'));
   await page.locator('.exhibit-card').first().waitFor();
   await page.waitForTimeout(900);
   check((await page.locator('.exhibit-card').count()) === 6, 'Mobile menu reaches the collection');

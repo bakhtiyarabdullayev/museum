@@ -14,6 +14,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { MuseumMark } from '@/components/Logo';
 import { useLanguage } from '@/components/LanguageProvider';
+import { assetPath } from '@/lib/assetPath';
 const fade = {
   initial: { opacity: 1, y: 12 },
   animate: { opacity: 1, y: 0 },
@@ -67,7 +68,7 @@ export default function Home() {
             transition={{ duration: 0.9, delay: 0.1 }}
           >
             <img
-              src="/images/museum-hero.jpg"
+              src={assetPath('/images/museum-hero.jpg')}
               alt={t({
                 az: 'İsti daş divarlar və tarixi eksponatlarla virtual muzeyin interyeri',
                 en: 'A warm limestone museum interior with historical exhibits',

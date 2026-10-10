@@ -1,4 +1,5 @@
 import { Room } from './types';
+import { assetPath } from '@/lib/assetPath';
 // Equirectangular, 2:1 images. Hotspot coordinates are in radians.
 // Replace a panorama here, then adjust yaw/pitch to match the new exhibit positions.
 export const rooms: Room[] = [
@@ -6,7 +7,7 @@ export const rooms: Room[] = [
     id: 'entrance',
     name: { az: 'Giriş zalı', en: 'Entrance Hall' },
     subtitle: { az: 'Bir hekayənin başlanğıcı', en: 'The beginning of a story' },
-    panorama: '/panoramas/entrance.jpg',
+    panorama: assetPath('/panoramas/entrance.jpg'),
     initialYaw: 0,
     hotspots: [{ exhibitId: 'karabakh-carpet', yaw: -0.5, pitch: 0.08 }],
     links: [{ roomId: 'history', yaw: 0, pitch: -0.15 }],
@@ -15,7 +16,7 @@ export const rooms: Room[] = [
     id: 'history',
     name: { az: 'Tarix zalı', en: 'History Hall' },
     subtitle: { az: 'Əsrlərdən gələn izlər', en: 'Traces across the centuries' },
-    panorama: '/panoramas/history.jpg',
+    panorama: assetPath('/panoramas/history.jpg'),
     initialYaw: 0,
     hotspots: [
       { exhibitId: 'azerbaijani-dagger', yaw: -0.58, pitch: 0.035 },
@@ -33,7 +34,7 @@ export const rooms: Room[] = [
       az: 'Əllərin yaddaşı, xalqın ruhu',
       en: 'The memory of hands, the spirit of a people',
     },
-    panorama: '/panoramas/culture.jpg',
+    panorama: assetPath('/panoramas/culture.jpg'),
     initialYaw: 0,
     hotspots: [
       { exhibitId: 'traditional-dress', yaw: -0.64, pitch: 0.04 },

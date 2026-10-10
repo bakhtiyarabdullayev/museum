@@ -21,6 +21,22 @@ npm start
 
 All three routes are statically prerendered. Fonts, panoramas, artifact photographs, 3D geometry, and audio are served locally. JavaScript libraries are lazy-loaded for the panoramic and 3D experiences.
 
+## View on GitHub Pages
+
+Website address: **https://bakhtiyarabdullayev.github.io/museum/**.
+
+Enable hosting once in **Settings → Pages**: select **Deploy from a branch**, choose **gh-pages**, select **/ (root)**, and click **Save**. Allow a few minutes for GitHub to publish the site.
+
+The Pages workflow automatically builds and updates the `gh-pages` branch when code is pushed to `main`. It uses a static Next.js export with the `/museum` base path; images, panoramas, audio, and 3D models use the same prefix. Local development and Vercel builds keep their usual root paths.
+
+To generate the Pages files locally:
+
+```bash
+GITHUB_PAGES=true npm run build
+```
+
+The generated website is in `out/`.
+
 ## Publish to Vercel
 
 The included `vercel.json` configures the Next.js build. No application environment variables are required. With access to your Vercel account, run:

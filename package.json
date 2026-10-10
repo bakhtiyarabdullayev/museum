@@ -8,7 +8,7 @@
     "start": "next start --hostname 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "test:smoke": "node scripts/smoke.mjs",
-    "format": "prettier --write \"{app,components,data,scripts}/**/*.{ts,tsx,css,mjs}\" \"*.{md,json,ts,mjs}\""
+    "format": "prettier --write \"{app,components,data,lib,scripts}/**/*.{ts,tsx,css,mjs}\" \"*.{md,json,ts,mjs}\""
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
