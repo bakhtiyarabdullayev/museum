@@ -25,6 +25,15 @@ Artifact names and dates follow the source tour's collection descriptions. The c
 
 The model is an independent reference asset for the 3D demonstration, rather than a scan of an item in the Hallwyl photographs. The viewer normalizes its framing while preserving the source materials and textures.
 
+## Textured 3D antique camera
+
+- Asset: [Antique Camera — Khronos glTF Sample Assets](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/AntiqueCamera).
+- Creator: Maximillan Kamps for UX3D, 2018.
+- License: [CC0](https://creativecommons.org/publicdomain/zero/1.0/); the source includes a non-copyrightable UX3D logo on one tripod leg.
+- Local file: `public/models/antique-camera.glb`, including geometry and embedded PBR textures.
+
+This independent digital archive study is accessible through the tour's 3D collection and the main collection. It is not presented as an object in the photographed Hallwyl rooms. Embedded textures were resized to a maximum of 2048 pixels and recompressed to reduce the GLB from 17.5 MB to 6.7 MB; source geometry and material assignments are preserved. The preview image is rendered from the same model in the local viewer.
+
 ## Narration
 
 The Azerbaijani and English demonstration narration was regenerated for the new collection using eSpeak NG. The existing ambient sound bed remains an original demo asset. All runtime assets are served locally.

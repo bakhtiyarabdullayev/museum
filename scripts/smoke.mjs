@@ -88,6 +88,10 @@ try {
     (await page.locator('.room-info h1').textContent()).includes('Giriş'),
     'Entrance panorama is ready',
   );
+  check(
+    await page.getByTestId('direction-next').isVisible(),
+    'Labeled forward arrow is visible on desktop',
+  );
   const beforePan = await page.locator('[data-testid="panorama-viewer"]').screenshot();
   await dragCanvas('[data-testid="panorama-viewer"]');
   const afterPan = await page.locator('[data-testid="panorama-viewer"]').screenshot();
@@ -137,6 +141,26 @@ try {
   check(
     (await page.locator('.room-info h1').textContent()).includes('mədəniyyət'),
     'History navigation hotspot reaches Culture Hall',
+  );
+  check(
+    await page.getByTestId('hotspot-ceramic-vase').locator('.hotspot-3d').isVisible(),
+    '3D hotspot badge is visible without hovering',
+  );
+  check(
+    await page.getByTestId('exhibit-index-ceramic-vase').locator('em').isVisible(),
+    'Room exhibit index identifies the 3D vase',
+  );
+  await page.getByTestId('direction-previous').click();
+  await roomReady();
+  check(
+    (await page.locator('.room-info h1').textContent()) === 'Tarix zalı',
+    'Back arrow returns from Culture Hall',
+  );
+  await page.getByTestId('direction-next').click();
+  await roomReady();
+  check(
+    (await page.locator('.room-info h1').textContent()).includes('mədəniyyət'),
+    'Forward arrow moves to Culture Hall',
   );
   for (const id of ['ceramic-vase', 'porcelain-basket']) {
     await page.getByRole('button', { name: 'Görünüşü sıfırla' }).click();
@@ -199,6 +223,46 @@ try {
   await page.getByRole('button', { name: 'Turu tamamla' }).click();
   await page.locator('.tour-completed').waitFor();
   check(await page.locator('.tour-completed').isVisible(), 'Guided tour completes cleanly');
+  await page.getByTestId('open-model-gallery').click();
+  check(
+    (await page.locator('.model-gallery-card').count()) === 2,
+    '3D collection offers two distinct artifacts',
+  );
+  await page.screenshot({ path: `${screenshots}/3d-collection-desktop.png`, fullPage: true });
+  await closeDialog();
+  check(
+    (await page.locator('.model-gallery').count()) === 0,
+    '3D collection supports Escape dismissal',
+  );
+  await page.getByTestId('open-model-gallery').click();
+  await page.getByTestId('model-choice-antique-camera').click();
+  await page.getByTestId('model-canvas').waitFor();
+  await page.locator('.model-status').waitFor({ state: 'hidden' });
+  await page.waitForTimeout(1000);
+  check(
+    (await page.locator('#model-title').textContent()) === 'Tarixi fotokamera',
+    'Second textured GLB loads from the in-tour 3D collection',
+  );
+  const beforeCamera = await page.getByTestId('model-canvas').screenshot();
+  await dragCanvas('[data-testid="model-canvas"]', -180);
+  check(
+    !beforeCamera.equals(await page.getByTestId('model-canvas').screenshot()),
+    'Dragging rotates the antique camera',
+  );
+  await page.getByRole('button', { name: '3D modeli böyüt' }).click();
+  await page.getByRole('button', { name: '3D modeli kiçilt' }).click();
+  await page.getByRole('button', { name: 'Kameranı sıfırla' }).click();
+  check(true, 'Camera model supports zoom and reset');
+  await page.screenshot({ path: `${screenshots}/camera-desktop.png`, fullPage: true });
+  await closeDialog();
+  check(
+    (await page.locator('#exhibit-title').textContent()) === 'Tarixi fotokamera',
+    'Closing the camera model returns to its exhibit information',
+  );
+  await page.getByRole('button', { name: 'Audio hekayəni dinlə' }).click();
+  await page.getByRole('button', { name: 'Audionu dayandır' }).waitFor();
+  check(true, 'Camera exhibit has working narration');
+  await closeDialog();
   await page.getByRole('button', { name: 'English', exact: true }).click();
   await page.locator('.room-info h1').filter({ hasText: 'Traditional' }).waitFor();
   check(
@@ -216,11 +280,15 @@ try {
   );
   await page.getByRole('button', { name: 'Azərbaycan dili', exact: true }).click();
   await imagesLoaded();
-  check((await page.locator('.exhibit-card').count()) === 6, 'Collection shows all six exhibits');
+  check((await page.locator('.exhibit-card').count()) === 7, 'Collection shows all seven exhibits');
+  check(
+    (await page.locator('.card-3d').count()) === 2,
+    'Both 3D artifacts are clearly badged in the collection',
+  );
   for (const [filter, count] of [
     ['Tekstil', 1],
     ['Silahlar', 2],
-    ['İncəsənət', 1],
+    ['İncəsənət', 2],
     ['Keramika', 2],
   ]) {
     await page.getByRole('button', { name: filter, exact: true }).click();
@@ -238,12 +306,12 @@ try {
   );
   await page.getByRole('button', { name: 'Bütün eksponatları göstər' }).click();
   check(
-    (await page.locator('.exhibit-card').count()) === 6,
+    (await page.locator('.exhibit-card').count()) === 7,
     'Search reset restores the collection',
   );
   await page.waitForTimeout(350);
   await page.screenshot({ path: `${screenshots}/collection-desktop.png`, fullPage: true });
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 7; i++) {
     await page.locator('.exhibit-card').nth(i).click();
     await page.locator('#exhibit-title').waitFor();
     check(await page.locator('#exhibit-title').isVisible(), `Collection exhibit ${i + 1} opens`);
@@ -264,6 +332,7 @@ try {
     'marble-relief',
     'historic-firearms',
     'porcelain-basket',
+    'antique-camera',
   ])
     for (const lang of ['az', 'en']) {
       const r = await page.request.get(`${base}/audio/${id}-${lang}.mp3`);
@@ -286,7 +355,7 @@ try {
   await page.waitForURL((url) => routeMatches(url.href, '/collection'));
   await page.locator('.exhibit-card').first().waitFor();
   await page.waitForTimeout(900);
-  check((await page.locator('.exhibit-card').count()) === 6, 'Mobile menu reaches the collection');
+  check((await page.locator('.exhibit-card').count()) === 7, 'Mobile menu reaches the collection');
   check(
     await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
     'Mobile collection has no horizontal overflow',
@@ -294,6 +363,55 @@ try {
   await page.screenshot({ path: `${screenshots}/collection-mobile.png`, fullPage: true });
   await go('/museum');
   await roomReady();
+  check(
+    await page.getByTestId('direction-next').isVisible(),
+    'Mobile room directions stay visible',
+  );
+  check(
+    await page.getByTestId('open-model-gallery').isVisible(),
+    'Mobile toolbar exposes the 3D collection',
+  );
+  check(
+    await page.evaluate(() =>
+      [...document.querySelectorAll('.museum-bottom button, .museum-bottom a')].every((el) => {
+        const r = el.getBoundingClientRect();
+        return r.left >= 0 && r.right <= innerWidth && r.bottom <= innerHeight;
+      }),
+    ),
+    'Mobile arrows and toolbar controls fit the viewport',
+  );
+  await page.screenshot({ path: `${screenshots}/museum-navigation-mobile.png`, fullPage: true });
+  await page.getByTestId('direction-next').click();
+  await roomReady();
+  check(
+    (await page.locator('.room-info h1').textContent()) === 'Tarix zalı',
+    'Mobile forward arrow reaches History Hall',
+  );
+  await page.getByTestId('direction-next').click();
+  await roomReady();
+  await page.getByTestId('direction-previous').click();
+  await roomReady();
+  check(
+    (await page.locator('.room-info h1').textContent()) === 'Tarix zalı',
+    'Mobile back arrow returns from Culture Hall',
+  );
+  await page.getByTestId('open-model-gallery').click();
+  check(
+    await page
+      .locator('.model-gallery')
+      .evaluate((el) => el.getBoundingClientRect().right <= innerWidth),
+    'Mobile 3D collection fits the viewport',
+  );
+  await page.screenshot({ path: `${screenshots}/3d-collection-mobile.png`, fullPage: true });
+  await page.getByTestId('model-choice-antique-camera').click();
+  await page.getByTestId('model-canvas').waitFor();
+  await page.locator('.model-status').waitFor({ state: 'hidden' });
+  check(
+    await page.getByTestId('model-canvas').isVisible(),
+    'Mobile camera model loads from the 3D collection',
+  );
+  await closeDialog();
+  await closeDialog();
   await page.getByRole('button', { name: 'Bələdçili tur', exact: true }).click();
   await page.locator('#exhibit-title').waitFor();
   await page.waitForTimeout(350);

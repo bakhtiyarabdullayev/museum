@@ -90,7 +90,9 @@ export default function MuseumMap({
           <i />
           {t({ az: 'Hazırkı məkan', en: 'Current location' })}
           <span>
-            3 {t({ az: 'zal', en: 'rooms' })} · 6 {t({ az: 'eksponat', en: 'exhibits' })}
+            {rooms.length} {t({ az: 'zal', en: 'rooms' })} ·{' '}
+            {rooms.reduce((count, room) => count + room.hotspots.length, 0)}{' '}
+            {t({ az: 'eksponat nöqtəsi', en: 'exhibit hotspots' })}
           </span>
         </div>
       </motion.div>

@@ -192,6 +192,32 @@ const records: Exhibit[] = [
       url: 'https://hallwylskamuseet.se/en/',
     },
   },
+  {
+    id: 'antique-camera',
+    name: { az: 'Tarixi fotokamera', en: 'Antique camera' },
+    description: {
+      az: 'Ağac gövdəsi, körüklü quruluşu və üçayaqlı dayağı ilə klassik fotokameranı interaktiv 3D formatında araşdırın.',
+      en: 'Explore a classic wooden camera with bellows and a tripod in interactive 3D.',
+    },
+    story: {
+      az: 'Bu rəqəmsal arxiv nümunəsi tarixi fotoqrafiya avadanlığının quruluşunu göstərir. UX3D üçün Maximillan Kamps tərəfindən hazırlanmış model muzeydəki əşyaların necə rəqəmsallaşdırıla biləcəyini nümayiş etdirir. Zal fotoşəkillərindəki kolleksiyadan ayrıca 3D nümunədir.',
+      en: 'This digital archive study illustrates the construction of historic photographic equipment. Created by Maximillan Kamps for UX3D, it demonstrates how objects can be explored in a digital museum. It is an independent 3D reference, separate from the photographed room collection.',
+    },
+    period: { az: '3D arxiv nümunəsi', en: '3D archive study' },
+    category: 'arts',
+    material: { az: 'Ağac, metal, dəri körük', en: 'Wood, metal, leather bellows' },
+    image: '/exhibits/antique-camera.jpg',
+    model3D: '/models/antique-camera.glb',
+    roomId: 'archive',
+    source: {
+      name: 'UX3D / Maximillan Kamps · CC0',
+      url: 'https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/AntiqueCamera',
+    },
+    modelSource: {
+      name: 'UX3D / Maximillan Kamps · CC0',
+      url: 'https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/AntiqueCamera',
+    },
+  },
 ];
 export const exhibits = records.map((exhibit) => ({
   ...exhibit,

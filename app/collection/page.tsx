@@ -148,8 +148,8 @@ export default function CollectionPage() {
           <Box size={18} />
           <span>
             {t({
-              az: 'Bir əşyaya daha yaxından baxın. 3D işarəli eksponatı hər tərəfdən araşdırın.',
-              en: 'Take a closer look. Explore the artifact with the 3D badge from every angle.',
+              az: 'Əşyalara daha yaxından baxın. 3D işarəli eksponatları hər tərəfdən araşdırın.',
+              en: 'Take a closer look. Explore artifacts with the 3D badge from every angle.',
             })}
           </span>
           <span>İRS</span>

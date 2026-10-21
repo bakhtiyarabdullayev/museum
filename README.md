@@ -53,29 +53,29 @@ Choose your account/team when prompted. Vercel can assign `museum.vercel.app` on
 1. Start on `/` and choose **Virtual muzeyə daxil ol**.
 2. Drag to look around the real photographic entrance hall. Select the numbered tapestry hotspot.
 3. Open **Ətraflı bax** or play its **Audio hekayə**.
-4. Close the panel and select the floating **Tarix zalı** arrow in the doorway.
+4. Close the panel and select the large floating **Tarix zalı** chevrons in the doorway. Labeled back/forward arrows also connect rooms on desktop and mobile.
 5. Visit **Ənənəvi mədəniyyət zalı**. Select **Keramika vazası**, then **3D-də bax**.
 6. Drag the textured ceramic vase to rotate it, scroll/pinch to zoom, and use the reset icon.
-7. Return to the room and open **Xəritə** to travel between all three halls.
+7. Use the **3D** button in any room to open the vase or antique camera. Open **Xəritə** to travel between all three halls.
 8. Use the collection icon to open `/collection` and demonstrate filters.
 
 Alternatively, **Bələdçili tur** guides you through the tapestry, armour, and 3D vase, with three progress steps. Major UI elements, exhibit stories, and narration support AZ/EN. Your language choice persists locally. The room's exhibit index also opens each photographed object directly.
 
 ## Replace demo content
 
-- `data/exhibits.ts`: six structured bilingual exhibits, categories, descriptions, extended stories, materials, images, and optional `model3D` paths.
+- `data/exhibits.ts`: seven structured bilingual exhibits (six photographed room objects and one additional 3D archive study), categories, descriptions, extended stories, materials, images, and optional `model3D` paths.
 - `data/rooms.ts`: three connected rooms and their panoramas, exhibit positions, and navigation links.
 - `data/types.ts`: shared TypeScript types.
 - `public/panoramas/`: **2:1 equirectangular** 360° JPEGs. Replace these with real museum photography, then adjust marker `yaw` and `pitch` in radians in the room configuration. Zero yaw looks toward the center of the image; positive pitch looks up.
 - `public/exhibits/`: exhibit images. Keep the listed filenames or update the data.
-- `public/models/ceramic-vase.glb`: a locally bundled, textured Poly Haven asset. The viewer automatically centers and scales imported models to fit its presentation stage.
+- `public/models/`: locally bundled, textured ceramic vase (Poly Haven) and antique camera (UX3D) GLBs. The viewer automatically centers and scales imported models to fit its presentation stage. Models load only when selected.
 - `public/audio/`: local Azerbaijani/English narration and an optional ambient bed. Narration paths follow `{exhibit-id}-{az|en}.mp3`.
 
 Photo Sphere Viewer renders the full 360° panoramas and spatial hotspots. Three.js renders the artifact with orbit controls, local environment lighting, zoom limits, and camera reset. Framer Motion animates transitions and dialogs. Tailwind CSS v4 is available alongside the museum's visual styles in `app/globals.css`.
 
 ## Browser verification
 
-The smoke test exercises actual application behavior: all routes and six exhibit hotspots, room navigation, map teleportation, guided-tour progress, real GLB loading and rotation, zoom/reset controls, audio playback, language persistence, collection filtering/search, modal keyboard dismissal, and mobile layouts. It reports failed browser requests and JavaScript errors.
+The smoke test exercises actual application behavior: all routes, six exhibit hotspots, directional arrows on desktop and mobile, map teleportation, guided-tour progress, both textured GLBs loading and rotating, zoom/reset controls, the 3D collection, audio playback, language persistence, collection filtering/search, modal keyboard dismissal, and mobile layouts. It reports failed browser requests and JavaScript errors.
 
 ```bash
 # Once, if Chromium isn't already installed:
@@ -89,6 +89,6 @@ The test automatically uses `/usr/bin/chromium` when available. Set `CHROMIUM_PA
 
 ## Demo assets and scope
 
-The virtual tour uses photographic Hallwyl Museum interiors, real photographed collection objects, and a textured Poly Haven ceramic vase. These are international reference assets for an Azerbaijani-language demo. The model is a separate 3D reference, identified in the viewer. See [ASSET_CREDITS.md](ASSET_CREDITS.md) for sources and processing details. Narration matches the new collection and was synthesized locally with eSpeak NG.
+The virtual tour uses photographic Hallwyl Museum interiors, real photographed collection objects, a textured Poly Haven ceramic vase, and a UX3D antique camera. These are international reference assets for an Azerbaijani-language demo. The two models are separate 3D references, identified in the viewer. See [ASSET_CREDITS.md](ASSET_CREDITS.md) for sources and processing details. Narration matches the collection and was synthesized locally with eSpeak NG.
 
 This prototype deliberately contains no authentication, payments, administration, CMS, analytics, or backend. It can be extended by adding data and replacing assets without redesigning the frontend.

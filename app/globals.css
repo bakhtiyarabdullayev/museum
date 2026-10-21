@@ -972,7 +972,8 @@ svg {
   pointer-events: auto;
 }
 .room-info {
-  min-width: 260px;
+  min-width: 0;
+  max-width: 440px;
 }
 .room-info .eyebrow {
   color: #ccb78d;
@@ -1000,74 +1001,59 @@ svg {
 .room-navigation {
   display: flex;
   align-items: center;
-  gap: 13px;
-  margin-bottom: 11px;
+  gap: 16px;
+  margin-bottom: 9px;
+  flex-shrink: 0;
 }
-.room-navigation > button {
-  width: 28px;
-  height: 28px;
+.room-direction {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
   background: none;
-  color: #eae2cf;
+  color: #f5eddb;
+  text-align: left;
+}
+.direction-arrow {
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
+  flex-shrink: 0;
+  border: 1px solid #e9dbb875;
+  border-radius: 50%;
+  background: #292e29cf;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
-.room-navigation-dots {
-  display: flex;
-  gap: 9px;
+.room-direction:hover .direction-arrow {
+  background: #9b8055;
 }
-.room-navigation-dots button {
-  padding: 3px;
-  background: none;
+.room-direction.previous:hover .direction-arrow {
+  transform: translateX(-3px);
+}
+.room-direction.next:hover .direction-arrow {
+  transform: translateX(3px);
+}
+.direction-label {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  align-items: center;
-  color: #e0d7c185;
-  position: relative;
-  border: 1px solid transparent;
-  transition:
-    border-color 0.2s,
-    opacity 0.2s;
+  gap: 5px;
+  max-width: 110px;
 }
-.room-navigation-dots button img {
-  width: 64px;
-  height: 43px;
-  object-fit: cover;
-  opacity: 0.55;
-  transition: opacity 0.2s;
+.room-direction.next .direction-label {
+  text-align: right;
 }
-.room-navigation-dots button.active,
-.room-navigation-dots button:hover {
-  border-color: #c7a97d;
-}
-.room-navigation-dots button.active img,
-.room-navigation-dots button:hover img {
-  opacity: 1;
-}
-.room-navigation-dots button > span {
-  display: none;
-}
-.room-navigation-dots button.active > span {
-  background: #e2c897;
-}
-.room-navigation-dots button.active > span:after {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border: 1px solid #d8c09b70;
-  border-radius: 50%;
-}
-.room-navigation-dots small {
+.direction-label small {
+  color: #d1b887;
   font-size: 7px;
-  letter-spacing: 0.5px;
-  position: absolute;
-  bottom: 6px;
-  left: 7px;
-  color: white;
-  text-shadow: 0 1px 4px #000;
+  letter-spacing: 1.6px;
 }
-.room-navigation-dots button.active {
-  color: #e6dbc3;
+.direction-label strong {
+  font-size: 10px;
+  line-height: 1.5;
+  font-weight: 400;
 }
 .museum-bottom-actions {
   display: flex;
@@ -1092,6 +1078,10 @@ svg {
 }
 .museum-secondary:hover {
   background: #4b4c3ecf;
+}
+.models-control {
+  color: #f0d29b;
+  border-color: #d0b07990;
 }
 .museum-guide {
   background: #f2eddf;
@@ -1260,6 +1250,18 @@ svg {
   padding-left: 6px;
   border-left: 1px solid #c7b38750;
 }
+.hotspot-3d {
+  position: absolute;
+  right: -8px;
+  top: -1px;
+  padding: 3px 5px;
+  background: #ead6ad;
+  color: #272d25;
+  border: 1px solid #fff3d7;
+  font: 700 8px var(--sans);
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px #00000035;
+}
 .room-hotspot {
   display: flex;
   align-items: center;
@@ -1268,32 +1270,36 @@ svg {
   background: none;
   color: #fbf5e5;
   position: relative;
-  transform: translateY(9px);
+  padding: 0;
+  width: 100px;
+  height: 90px;
 }
 .room-hotspot > span {
   display: grid;
   place-items: center;
-  width: 54px;
-  height: 42px;
+  width: 80px;
+  height: 57px;
   border-radius: 50%;
-  border: 1px solid #f1e9d390;
-  background: #292e29ae;
-  transform: perspective(80px) rotateX(18deg);
+  border: 1px solid #fff1d4ba;
+  background: #292e29c9;
+  box-shadow: 0 5px 20px #00000035;
+  transform: perspective(120px) rotateX(30deg);
   transition:
     background 0.2s,
     transform 0.2s;
 }
-.room-hotspot:hover > span {
+.room-hotspot:hover > span,
+.room-hotspot:focus-visible > span {
   background: #ad9368;
-  transform: perspective(80px) rotateX(18deg) translateY(-3px);
+  transform: perspective(120px) rotateX(30deg) translateY(-4px);
 }
 .room-hotspot strong {
   font-weight: 400;
   font-family: var(--sans);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.3px;
-  background: #292e29bb;
-  padding: 5px 9px;
+  background: #292e29df;
+  padding: 7px 11px;
   white-space: nowrap;
 }
 /* Exhibit stories and local three-dimensional artifacts. */
@@ -1306,6 +1312,98 @@ svg {
   align-items: center;
   justify-content: center;
   padding: 30px;
+}
+.model-gallery {
+  position: relative;
+  width: 720px;
+  max-width: 100%;
+  max-height: calc(100dvh - 60px);
+  overflow-y: auto;
+  padding: 40px;
+  background: var(--ivory);
+  color: var(--ink);
+  box-shadow: 0 20px 80px #00000035;
+}
+.model-gallery > .eyebrow {
+  font-size: 8px;
+  color: var(--bronze);
+}
+.model-gallery h2 {
+  font-size: 44px;
+  line-height: 1.1;
+  margin: 19px 0 13px;
+  max-width: 500px;
+}
+.model-gallery > p {
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 490px;
+}
+.model-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 27px;
+}
+.model-gallery-card {
+  background: none;
+  color: var(--ink);
+  padding: 0;
+  text-align: left;
+}
+.model-gallery-image {
+  position: relative;
+  aspect-ratio: 1.2;
+  overflow: hidden;
+  background: #e3ded3;
+}
+.model-gallery-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.model-gallery-card:hover img {
+  transform: scale(1.04);
+}
+.model-gallery-image > span {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--ivory);
+  color: var(--bronze);
+  font-size: 9px;
+}
+.model-gallery-period {
+  display: block;
+  margin-top: 16px;
+  font-size: 9px;
+  color: var(--muted);
+}
+.model-gallery-card h3 {
+  font-size: 29px;
+  margin: 7px 0 14px;
+  line-height: 1.1;
+}
+.model-gallery-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  color: var(--bronze);
+  font-size: 10px;
+}
+.model-gallery-note {
+  display: block;
+  margin-top: 17px;
+  font-size: 8px;
+  color: var(--muted);
 }
 .exhibit-dialog {
   background: var(--ivory);
@@ -1969,11 +2067,23 @@ svg {
   .collection-control {
     padding: 0;
   }
-  .room-navigation {
-    gap: 5px;
+  .museum-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
   }
-  .room-navigation-dots {
-    gap: 14px;
+  .room-navigation {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+    margin-bottom: 0;
+  }
+  .room-info,
+  .museum-bottom-actions {
+    grid-row: 2;
+  }
+  .tour-hint {
+    bottom: 235px;
   }
 }
 @media (max-width: 850px) {
@@ -2130,9 +2240,6 @@ svg {
     font-size: 7px;
     letter-spacing: 0.7px;
   }
-  .room-navigation {
-    display: none;
-  }
   .museum-header {
     padding: 23px 25px;
   }
@@ -2147,7 +2254,7 @@ svg {
   }
   .room-info {
     min-width: 0;
-    max-width: 45%;
+    max-width: 100%;
   }
   .room-info h1 {
     font-size: 32px;
@@ -2585,9 +2692,8 @@ svg {
     left: 20px;
     right: 20px;
     bottom: 27px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 17px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
   }
   .room-info {
     max-width: 100%;
@@ -2605,21 +2711,23 @@ svg {
     font-size: 8px;
   }
   .museum-bottom-actions {
+    grid-row: 3;
     width: 100%;
     margin: 0;
-    gap: 9px;
+    gap: 7px;
   }
   .museum-secondary {
     min-height: 40px;
-    padding: 0 13px;
+    padding: 0 11px;
     font-size: 9px;
+    gap: 7px;
   }
   .museum-guide {
     margin-left: auto;
     min-height: 40px;
     font-size: 9px;
-    gap: 9px;
-    padding: 0 16px;
+    gap: 7px;
+    padding: 0 12px;
   }
   .collection-control {
     width: 40px;
@@ -2643,7 +2751,7 @@ svg {
     width: 16px;
   }
   .tour-hint {
-    bottom: 199px;
+    bottom: 285px;
     max-width: calc(100% - 40px);
     width: max-content;
     padding: 12px 13px;
@@ -2654,7 +2762,7 @@ svg {
     font-size: 7px;
   }
   .tour-completed {
-    bottom: 205px;
+    bottom: 285px;
     font-size: 9px;
     max-width: calc(100% - 40px);
     width: max-content;
@@ -2730,6 +2838,28 @@ svg {
   }
   .map-dialog > h2 {
     font-size: 36px;
+  }
+  .model-gallery {
+    padding: 32px 22px 23px;
+    max-height: calc(100dvh - 24px);
+  }
+  .model-gallery h2 {
+    font-size: 36px;
+    max-width: 270px;
+  }
+  .model-gallery-grid {
+    gap: 16px;
+    margin-top: 22px;
+  }
+  .model-gallery-card h3 {
+    font-size: 25px;
+  }
+  .model-gallery-period {
+    font-size: 8px;
+    line-height: 1.6;
+  }
+  .model-gallery-image {
+    aspect-ratio: 0.9;
   }
   .map-dialog > .eyebrow {
     font-size: 7px;
@@ -2942,6 +3072,13 @@ svg {
 .room-exhibit-index button span {
   color: #c8ad7e;
   font-size: 8px;
+}
+.room-exhibit-index button em {
+  font-style: normal;
+  color: #f0d29b;
+  border: 1px solid #d0b07970;
+  padding: 2px 4px;
+  font-size: 7px;
 }
 .room-exhibit-index button:hover {
   color: white;

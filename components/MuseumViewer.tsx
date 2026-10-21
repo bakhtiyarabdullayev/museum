@@ -20,7 +20,7 @@ type Props = {
   onLoading: (loading: boolean) => void;
 };
 const arrow =
-  '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 14 6-6 6 6"/><path d="M12 8v10"/></svg>';
+  '<svg width="42" height="38" viewBox="0 0 40 36" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 21 11-9 11 9"/><path d="m9 31 11-9 11 9"/></svg>';
 function markersFor(room: Room, language: Language): MarkerConfig[] {
   return [
     ...room.hotspots.map(({ exhibitId, yaw, pitch }, index) => ({
@@ -28,13 +28,13 @@ function markersFor(room: Room, language: Language): MarkerConfig[] {
       position: { yaw, pitch },
       size: { width: 44, height: 44 },
       anchor: 'center center',
-      html: `<button class="exhibit-hotspot" aria-label="${getExhibit(exhibitId).name[language]}" data-testid="hotspot-${exhibitId}"><span class="hotspot-core">${String(index + 1).padStart(2, '0')}</span><span class="hotspot-label">${getExhibit(exhibitId).name[language]}${getExhibit(exhibitId).model3D ? '<em>3D</em>' : ''}</span></button>`,
+      html: `<button class="exhibit-hotspot" aria-label="${getExhibit(exhibitId).name[language]}${getExhibit(exhibitId).model3D ? ' · 3D' : ''}" data-testid="hotspot-${exhibitId}"><span class="hotspot-core">${String(index + 1).padStart(2, '0')}</span>${getExhibit(exhibitId).model3D ? '<span class="hotspot-3d">3D</span>' : ''}<span class="hotspot-label">${getExhibit(exhibitId).name[language]}</span></button>`,
       data: { kind: 'exhibit', id: exhibitId },
     })),
     ...room.links.map(({ roomId, yaw, pitch }) => ({
       id: `room-${roomId}`,
       position: { yaw, pitch },
-      size: { width: 58, height: 58 },
+      size: { width: 100, height: 90 },
       anchor: 'center center',
       html: `<button class="room-hotspot" aria-label="${language === 'az' ? 'Keçid:' : 'Go to:'} ${getRoom(roomId).name[language]}" data-testid="room-${roomId}"><span>${arrow}</span><strong>${getRoom(roomId).name[language]}</strong></button>`,
       data: { kind: 'room', id: roomId },

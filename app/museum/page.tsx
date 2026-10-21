@@ -20,6 +20,7 @@ import {
   X,
   MousePointer2,
   Grid2X2,
+  Box,
 } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { LanguageToggle, useLanguage } from '@/components/LanguageProvider';
@@ -27,6 +28,7 @@ import { rooms, getRoom } from '@/data/rooms';
 import { getExhibit, guidedExhibits } from '@/data/exhibits';
 import ExhibitModal from '@/components/ExhibitModal';
 import MuseumMap from '@/components/MuseumMap';
+import ModelGallery from '@/components/ModelGallery';
 import type { MuseumViewerHandle } from '@/components/MuseumViewer';
 import { assetPath } from '@/lib/assetPath';
 const MuseumViewer = dynamic(() => import('@/components/MuseumViewer'), { ssr: false });
@@ -37,6 +39,7 @@ export default function MuseumPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [model, setModel] = useState(false);
   const [map, setMap] = useState(false);
+  const [gallery, setGallery] = useState(false);
   const [guideStep, setGuideStep] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [sound, setSound] = useState(false);
@@ -73,6 +76,13 @@ export default function MuseumPage() {
   }
   function showExhibit(id: string) {
     setSelected(id);
+    setGuideStep(null);
+    setHint(false);
+  }
+  function showModel(id: string) {
+    setSelected(id);
+    setModel(true);
+    setGallery(false);
     setGuideStep(null);
     setHint(false);
   }
@@ -168,8 +178,8 @@ export default function MuseumPage() {
               {t({ az: 'Ətrafa baxmaq üçün sürükləyin', en: 'Drag to look around' })}
               <small>
                 {t({
-                  az: 'İşarələrə toxunaraq hekayələri kəşf edin',
-                  en: 'Select a hotspot to discover its story',
+                  az: 'Oxlarla zallara keçin · 3D eksponatları araşdırın',
+                  en: 'Follow the arrows · Explore the 3D exhibits',
                 })}
               </small>
             </span>
@@ -245,46 +255,63 @@ export default function MuseumPage() {
               >
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 {t(getExhibit(spot.exhibitId).name)}
+                {getExhibit(spot.exhibitId).model3D && <em>3D</em>}
               </button>
             ))}
           </div>
         </div>
-        <div className="room-navigation">
-          <button
-            disabled={roomIndex === 0 || loading}
-            onClick={() => moveTo(rooms[roomIndex - 1].id)}
-            aria-label={t({ az: 'Əvvəlki zal', en: 'Previous room' })}
-          >
-            <ChevronLeft size={17} />
-          </button>
-          <div className="room-navigation-dots">
-            {rooms.map((r, i) => (
-              <button
-                key={r.id}
-                className={r.id === roomId ? 'active' : ''}
-                onClick={() => moveTo(r.id)}
-                disabled={loading}
-                aria-label={t(r.name)}
-                aria-current={r.id === roomId ? 'step' : undefined}
-              >
-                <img src={r.preview} alt="" />
-                <span />
-                <small>0{i + 1}</small>
-              </button>
-            ))}
-          </div>
-          <button
-            disabled={roomIndex === 2 || loading}
-            onClick={() => moveTo(rooms[roomIndex + 1].id)}
-            aria-label={t({ az: 'Növbəti zal', en: 'Next room' })}
-          >
-            <ChevronRight size={17} />
-          </button>
-        </div>
+        <nav
+          className="room-navigation"
+          aria-label={t({ az: 'Zallar arasında hərəkət', en: 'Room directions' })}
+        >
+          {roomIndex > 0 && (
+            <button
+              className="room-direction previous"
+              disabled={loading}
+              onClick={() => moveTo(rooms[roomIndex - 1].id)}
+              aria-label={`${t({ az: 'Əvvəlki zal', en: 'Previous room' })}: ${t(rooms[roomIndex - 1].name)}`}
+              data-testid="direction-previous"
+            >
+              <span className="direction-arrow">
+                <ChevronLeft size={24} />
+              </span>
+              <span className="direction-label">
+                <small>{t({ az: 'GERİ', en: 'BACK' })}</small>
+                <strong>{t(rooms[roomIndex - 1].name)}</strong>
+              </span>
+            </button>
+          )}
+          {roomIndex < rooms.length - 1 && (
+            <button
+              className="room-direction next"
+              disabled={loading}
+              onClick={() => moveTo(rooms[roomIndex + 1].id)}
+              aria-label={`${t({ az: 'Növbəti zal', en: 'Next room' })}: ${t(rooms[roomIndex + 1].name)}`}
+              data-testid="direction-next"
+            >
+              <span className="direction-label">
+                <small>{t({ az: 'İRƏLİ', en: 'NEXT' })}</small>
+                <strong>{t(rooms[roomIndex + 1].name)}</strong>
+              </span>
+              <span className="direction-arrow">
+                <ChevronRight size={24} />
+              </span>
+            </button>
+          )}
+        </nav>
         <div className="museum-bottom-actions">
           <button className="museum-secondary" onClick={() => setMap(true)}>
             <Map size={17} />
             <span>{t({ az: 'Xəritə', en: 'Map' })}</span>
+          </button>
+          <button
+            className="museum-secondary models-control"
+            onClick={() => setGallery(true)}
+            aria-label={t({ az: '3D eksponatlar', en: '3D exhibits' })}
+            data-testid="open-model-gallery"
+          >
+            <Box size={17} />
+            <span>3D</span>
           </button>
           <Link
             href="/collection"
@@ -368,6 +395,9 @@ export default function MuseumPage() {
       </AnimatePresence>
       <AnimatePresence>
         {map && <MuseumMap roomId={roomId} onRoom={moveTo} onClose={() => setMap(false)} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {gallery && <ModelGallery onSelect={showModel} onClose={() => setGallery(false)} />}
       </AnimatePresence>
     </div>
   );
