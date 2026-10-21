@@ -1,5 +1,5 @@
-:HL["/museum/_next/static/chunks/02vjw7lsgu3mh.css","style"]
+:HL["/museum/_next/static/chunks/1l1l3fs5ilb0l.css","style"]
 :HC["/",""]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"museum","h":96,"c":"$Q2"}]]
-0:{"b":"VR7Zk4RBJnk7q0gq79HpS","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"8iOUy9-KLQEyRsbsuqGCO","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
