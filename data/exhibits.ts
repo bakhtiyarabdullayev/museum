@@ -1,115 +1,202 @@
 import { Exhibit, Localized, Category } from './types';
 import { assetPath } from '@/lib/assetPath';
 export const categories: Record<Category, Localized> = {
-  carpets: { az: 'Xalçalar', en: 'Carpets' },
-  weapons: { az: 'Silahlar', en: 'Weapons' },
-  clothing: { az: 'Geyim', en: 'Clothing' },
-  archaeology: { az: 'Arxeologiya', en: 'Archaeology' },
+  carpets: { az: 'Tekstil', en: 'Textiles' },
+  weapons: { az: 'Silahlar', en: 'Arms & armour' },
+  arts: { az: 'İncəsənət', en: 'Fine art' },
+  archaeology: { az: 'Keramika', en: 'Ceramics' },
 };
-export const exhibits: Exhibit[] = [
+const records: Exhibit[] = [
   {
-    id: 'karabakh-carpet',
-    name: { az: 'Qarabağ xalçası', en: 'Karabakh carpet' },
+    id: 'brussels-tapestry',
+    name: {
+      az: 'Tarixi qobelen',
+      en: 'Brussels tapestry',
+    },
     description: {
-      az: 'Qarabağ xalçaçılıq məktəbinə aid bu xalça Azərbaycanın zəngin toxuculuq ənənələrini əks etdirir.',
-      en: 'This carpet reflects the rich weaving traditions of the Karabakh school and Azerbaijan’s enduring textile heritage.',
+      az: 'XVI əsrə aid Brüssel qobelenində toxuculuq sənəti ilə mifoloji hekayə bir araya gəlir.',
+      en: 'A sixteenth-century Brussels tapestry brings together intricate weaving and a mythological narrative.',
     },
     story: {
-      az: 'Həndəsi naxışlar, isti rənglər və mərkəzi medalyonlar xalçaçılıq sənətinin özünəməxsus dilini yaradır. Hər ilmə nəsildən-nəslə ötürülən bir yaddaşın parçasıdır.',
-      en: 'Geometric motifs, warm colors, and central medallions form a distinctive visual language. Every knot is a fragment of memory passed from one generation to the next.',
+      az: 'Hallwyl kolleksiyasındakı bu qobelenlər Odisseyin Nausikaa ilə görüşünü təsvir edir. Yun və ipək sapların yaratdığı zəngin səth zalın rənglərini və memarlıq ritmini tamamlayır.',
+      en: 'The Hallwyl tapestries depict the meeting of Odysseus and Nausicaa. Their rich woven surfaces informed the room’s colors, proportions, and architectural details.',
     },
-    period: { az: '19-cu əsr', en: '19th century' },
+    period: {
+      az: '16-cı əsr',
+      en: '16th century',
+    },
     category: 'carpets',
-    material: { az: 'Yun, təbii boyalar', en: 'Wool, natural dyes' },
-    image: assetPath('/exhibits/carpet.jpg'),
+    material: {
+      az: 'Yun və ipək',
+      en: 'Wool and silk',
+    },
+    image: '/exhibits/tapestry.jpg',
     roomId: 'entrance',
+    source: {
+      name: 'Hallwyl Museum, Stockholm',
+      url: 'https://hallwylskamuseet.se/en/',
+    },
   },
   {
-    id: 'azerbaijani-dagger',
-    name: { az: 'Azərbaycan xəncəri', en: 'Azerbaijani dagger' },
+    id: 'ceremonial-armour',
+    name: {
+      az: 'Mərasim zirehi',
+      en: 'Ceremonial armour',
+    },
     description: {
-      az: 'Zərif metal işləmələri ilə bəzədilmiş xəncər həm ustalığın, həm də tarixi silah mədəniyyətinin nümunəsidir.',
-      en: 'A finely crafted dagger illustrating the skill of local metalworkers and the region’s historic arms culture.',
+      az: 'Polad lövhələrdən yığılmış bu zireh metal ustalarının dəqiqliyini və tarixi müdafiə sənətini nümayiş etdirir.',
+      en: 'Assembled from shaped steel plates, this armour reveals the precision of historic metalworking.',
     },
     story: {
-      az: 'Xəncərin sadə forması ilə işlənmiş dəstəyi sənət və funksiyanın vəhdətini göstərir. Bu cür əşyalar gündəlik həyatın, mərasimlərin və şəxsi kimliyin bir hissəsi olmuşdur.',
-      en: 'The blade’s simple silhouette and decorated hilt unite craft and function. Objects like this belonged to daily life, ceremony, and personal identity.',
+      az: 'Hallwyl silah kolleksiyasındakı alman zirehi XVI əsrin sonu və XVII əsrin əvvəlinə aid hissələrdən ibarətdir. Hərəkətli birləşmələr qorunma ilə hərəkət azadlığını birləşdirir.',
+      en: 'This German suit in the Hallwyl armoury combines parts from the late sixteenth and early seventeenth centuries. Articulated joints balance protection with freedom of movement.',
     },
-    period: { az: '18-ci əsr', en: '18th century' },
+    period: {
+      az: '16–17-ci əsrlər',
+      en: '16th–17th centuries',
+    },
     category: 'weapons',
-    material: { az: 'Polad, tunc, ağac', en: 'Steel, bronze, wood' },
-    image: assetPath('/exhibits/dagger.jpg'),
+    material: {
+      az: 'Polad, dəri',
+      en: 'Steel, leather',
+    },
+    image: '/exhibits/armour.jpg',
     roomId: 'history',
+    source: {
+      name: 'Hallwyl Museum, Stockholm',
+      url: 'https://hallwylskamuseet.se/en/',
+    },
   },
   {
-    id: 'copper-vessel',
-    name: { az: 'Mis qab', en: 'Copper vessel' },
+    id: 'ceramic-vase',
+    name: {
+      az: 'Keramika vazası',
+      en: 'Ceramic vase',
+    },
     description: {
-      az: 'Ənənəvi misgərlik sənətini təmsil edən bu qab gündəlik məişətin estetik zənginliyini göstərir.',
-      en: 'This vessel represents traditional coppersmithing and the quiet beauty of everyday objects.',
+      az: 'Şirli səth, incə naxışlar və təbii material detalları keramika sənətinin zərifliyini göstərir. Eksponatın 3D arxiv nümunəsini də araşdırın.',
+      en: 'Glazed surfaces, intricate decoration, and natural material detail reveal the subtlety of ceramic craft. Explore a textured 3D reference alongside the photographic collection.',
     },
     story: {
-      az: 'Lahıc və digər sənətkarlıq mərkəzlərində metal qablar əsrlər boyu əl ilə hazırlanmışdır. Formanın tarazlığı və dekorativ halqalar ustaların materiala olan həssas münasibətini əks etdirir.',
-      en: 'In Lahij and other craft centers, metal vessels have been shaped by hand for centuries. Balanced proportions and decorative rings reveal the maker’s sensitivity to the material.',
+      az: 'Keramika zalında müxtəlif formalı vazalar, qablar və çini əşyalar nümayiş olunur. 3D təcrübədə Poly Haven arxivindən hazırlanmış ayrıca keramika vazası nümunəsi istifadə edilir; bu, əşyanı yaxından və hər tərəfdən araşdırmağa imkan verir.',
+      en: 'The gallery presents vases, vessels, and porcelain in many forms. The interactive 3D study uses a separate ceramic vase asset from Poly Haven, allowing close inspection of its surface and shape from every angle.',
     },
-    period: { az: '19-cu əsr', en: '19th century' },
+    period: {
+      az: 'Dekorativ sənət',
+      en: 'Decorative arts',
+    },
     category: 'archaeology',
-    material: { az: 'Mis və tunc — demo model', en: 'Copper and bronze — demo model' },
-    image: assetPath('/exhibits/vessel.jpg'),
-    model3D: assetPath('/models/bronze-vessel.glb'),
+    material: {
+      az: 'Şirli keramika',
+      en: 'Glazed ceramic',
+    },
+    image: '/exhibits/vase.jpg',
+    model3D: '/models/ceramic-vase.glb',
     roomId: 'culture',
+    source: {
+      name: 'Hallwyl Museum, Stockholm',
+      url: 'https://hallwylskamuseet.se/en/',
+    },
+    modelSource: {
+      name: 'Poly Haven · ceramic_vase_01 (CC0)',
+      url: 'https://polyhaven.com/a/ceramic_vase_01',
+    },
   },
   {
-    id: 'traditional-dress',
-    name: { az: 'Milli geyim', en: 'Traditional dress' },
+    id: 'marble-relief',
+    name: {
+      az: 'Mərmər relyef',
+      en: 'Prometheus marble relief',
+    },
     description: {
-      az: 'Məxmər və qızılı bəzəklər Azərbaycan milli geyimlərinin zərifliyini və rəng ahəngini nümayiş etdirir.',
-      en: 'Velvet and golden details express the elegance and color harmony of Azerbaijani traditional clothing.',
+      az: 'Gusten Lindberqin Karrara mərmərində işlədiyi relyef Prometeyin insanlara od gətirməsi hekayəsini canlandırır.',
+      en: 'Gusten Lindberg’s Carrara marble relief depicts Prometheus bringing fire to mankind.',
     },
     story: {
-      az: 'Ənənəvi geyim insanın yaşadığı bölgəni, zövqünü və həyat tərzini əks etdirirdi. Tikiş, biçim və bəzəklər yerli sənətkarlığın mühüm bir hissəsidir.',
-      en: 'Traditional clothing reflected its wearer’s region, taste, and way of life. Tailoring, silhouettes, and ornament were important expressions of local craft.',
+      az: 'Açıq rəngli mərmər ilə qızılı çərçivənin təzadı relyefin fiqurlarını ön plana çıxarır. Əsər Hallwyl muzeyinin böyük salonunda, kaminin üzərində yerləşir.',
+      en: 'Pale marble and an ornate gilded frame bring the figures into relief. The work sits above the fireplace in the Hallwyl Museum’s Great Drawing Room.',
     },
-    period: { az: '19-cu əsr', en: '19th century' },
-    category: 'clothing',
-    material: { az: 'Məxmər, dekorativ sap', en: 'Velvet, decorative thread' },
-    image: assetPath('/exhibits/costume.jpg'),
-    roomId: 'culture',
+    period: {
+      az: '19-cu əsr',
+      en: '19th century',
+    },
+    category: 'arts',
+    material: {
+      az: 'Karrara mərməri',
+      en: 'Carrara marble',
+    },
+    image: '/exhibits/relief.png',
+    roomId: 'entrance',
+    source: {
+      name: 'Hallwyl Museum, Stockholm',
+      url: 'https://hallwylskamuseet.se/en/',
+    },
   },
   {
-    id: 'ancient-coin',
-    name: { az: 'Qədim sikkə', en: 'Ancient coin' },
+    id: 'historic-firearms',
+    name: {
+      az: 'Tarixi ov silahları',
+      en: 'Historic hunting rifles',
+    },
     description: {
-      az: 'Orta əsrlərin ticarət əlaqələrindən xəbər verən sikkə dövrünün iqtisadi və mədəni həyatına kiçik bir pəncərədir.',
-      en: 'A small window into medieval economic and cultural life, this coin evokes the trade networks of its time.',
+      az: 'Taxta qundaqlar, incə metal işləmələri və müxtəlif mexanizmlər tarixi silah ustalığını nümayiş etdirir.',
+      en: 'Wooden stocks, fine metalwork, and varied mechanisms reveal centuries of specialist gunsmithing.',
     },
     story: {
-      az: 'Sikkələr yalnız mübadilə vasitəsi deyil, həm də dövrün rəmzlərini daşıyan tarixi mənbələrdir. Onların üzərindəki işarələr uzaq şəhərləri və ticarət yollarını birləşdirən hekayələr danışır.',
-      en: 'Coins are both a means of exchange and historical records. Their symbols tell stories of distant cities and the trading routes that connected them.',
+      az: 'Hallwyl silah kolleksiyasında XVI–XVIII əsrlərə aid ov tüfəngləri nümayiş olunur. Kolleksiya silahların texniki inkişafını və dekorativ ənənələrini müqayisə etməyə imkan verir.',
+      en: 'The Hallwyl armoury includes hunting rifles from the sixteenth through eighteenth centuries. Its display lets visitors compare technical development and decorative traditions.',
     },
-    period: { az: '12-ci əsr', en: '12th century' },
-    category: 'archaeology',
-    material: { az: 'Metal ərintisi', en: 'Metal alloy' },
-    image: assetPath('/exhibits/coin.jpg'),
+    period: {
+      az: '16–18-ci əsrlər',
+      en: '16th–18th centuries',
+    },
+    category: 'weapons',
+    material: {
+      az: 'Polad, ağac',
+      en: 'Steel, wood',
+    },
+    image: '/exhibits/rifles.jpg',
     roomId: 'history',
+    source: {
+      name: 'Hallwyl Museum, Stockholm',
+      url: 'https://hallwylskamuseet.se/en/',
+    },
   },
   {
-    id: 'historic-ceramic',
-    name: { az: 'Tarixi keramika', en: 'Historic ceramic' },
+    id: 'porcelain-basket',
+    name: {
+      az: 'Çini səbət',
+      en: 'Niderviller porcelain basket',
+    },
     description: {
-      az: 'Torpağın sadə gözəlliyini qoruyan bu keramika nümunəsi qədim dulusçuluq ənənələrini xatırladır.',
-      en: 'Preserving the simple beauty of clay, this ceramic recalls the region’s ancient pottery traditions.',
+      az: 'Fransanın Niderviller emalatxanasında hazırlanmış qapaqlı çini səbət gündəlik əşyanı incə sənət nümunəsinə çevirir.',
+      en: 'A lidded porcelain basket from the French Niderviller pottery transforms an everyday object into decorative art.',
     },
     story: {
-      az: 'Dulusçuluq torpaq, su və odun yaratdığı sənətdir. Sadə məişət qablarında belə nəsillərin formalaşdırdığı bilik və estetik duyum yaşayır.',
-      en: 'Pottery is a craft shaped by earth, water, and fire. Even the simplest household vessel carries knowledge and a sense of beauty refined across generations.',
+      az: 'Təxminən 1785-ci ilə aid bu səbətlər qış aylarında şabalıd saxlamaq üçün istifadə olunurdu. Hallwyl kolleksiyasında onların naxışları və zərif işləmələri yaxından müşahidə edilə bilər.',
+      en: 'Dating to around 1785, these baskets were intended for storing chestnuts through winter. Their fine decoration and delicate construction can be seen in the Hallwyl collection.',
     },
-    period: { az: 'Orta əsrlər', en: 'Middle Ages' },
+    period: {
+      az: 'Təxminən 1785',
+      en: 'Around 1785',
+    },
     category: 'archaeology',
-    material: { az: 'Bişmiş gil', en: 'Fired clay' },
-    image: assetPath('/exhibits/ceramic.jpg'),
+    material: {
+      az: 'Bəzəkli çini',
+      en: 'Decorated porcelain',
+    },
+    image: '/exhibits/basket.jpg',
     roomId: 'culture',
+    source: {
+      name: 'Hallwyl Museum, Stockholm',
+      url: 'https://hallwylskamuseet.se/en/',
+    },
   },
 ];
-export const guidedExhibits = ['karabakh-carpet', 'azerbaijani-dagger', 'copper-vessel'];
+export const exhibits = records.map((exhibit) => ({
+  ...exhibit,
+  image: assetPath(exhibit.image),
+  model3D: exhibit.model3D ? assetPath(exhibit.model3D) : undefined,
+}));
+export const guidedExhibits = ['brussels-tapestry', 'ceremonial-armour', 'ceramic-vase'];
 export const getExhibit = (id: string) => exhibits.find((exhibit) => exhibit.id === id)!;

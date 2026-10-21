@@ -94,10 +94,10 @@ try {
   check(!beforePan.equals(afterPan), 'Dragging changes the 360° view');
   await page.getByRole('button', { name: 'Görünüşü sıfırla' }).click();
   await page.waitForTimeout(850);
-  await page.getByTestId('hotspot-karabakh-carpet').click();
+  await page.getByTestId('hotspot-brussels-tapestry').click();
   check(
-    (await page.locator('#exhibit-title').textContent()) === 'Qarabağ xalçası',
-    'Carpet hotspot opens the correct exhibit',
+    (await page.locator('#exhibit-title').textContent()) === 'Tarixi qobelen',
+    'Tapestry hotspot opens the correct exhibit',
   );
   await page.getByRole('button', { name: 'Ətraflı bax' }).click();
   await page.locator('.exhibit-story').waitFor();
@@ -107,6 +107,12 @@ try {
   check(true, 'Azerbaijani audio narration plays');
   await page.getByRole('button', { name: 'Audionu dayandır' }).click();
   await closeDialog();
+  await page.getByTestId('exhibit-index-marble-relief').click();
+  check(
+    (await page.locator('#exhibit-title').textContent()) === 'Mərmər relyef',
+    'Photographic marble exhibit opens from the room index',
+  );
+  await closeDialog();
   await page.getByRole('button', { name: 'Görünüşü sıfırla' }).click();
   await page.waitForTimeout(850);
   await page.getByTestId('room-history').click();
@@ -115,10 +121,11 @@ try {
     (await page.locator('.room-info h1').textContent()) === 'Tarix zalı',
     'Entrance navigation hotspot reaches History Hall',
   );
-  for (const id of ['azerbaijani-dagger', 'ancient-coin']) {
+  for (const id of ['ceremonial-armour', 'historic-firearms']) {
     await page.getByRole('button', { name: 'Görünüşü sıfırla' }).click();
     await page.waitForTimeout(850);
-    await page.getByTestId(`hotspot-${id}`).click();
+    await page.getByTestId(`exhibit-index-${id}`).click();
+    await page.waitForTimeout(750);
     await page.locator('#exhibit-title').waitFor();
     check(await page.locator('#exhibit-title').isVisible(), `History hotspot ${id} opens`);
     await closeDialog();
@@ -131,11 +138,11 @@ try {
     (await page.locator('.room-info h1').textContent()).includes('mədəniyyət'),
     'History navigation hotspot reaches Culture Hall',
   );
-  for (const id of ['traditional-dress', 'copper-vessel', 'historic-ceramic']) {
+  for (const id of ['ceramic-vase', 'porcelain-basket']) {
     await page.getByRole('button', { name: 'Görünüşü sıfırla' }).click();
     await page.waitForTimeout(850);
-    if (id === 'historic-ceramic') await dragCanvas('[data-testid="panorama-viewer"]', -220);
-    await page.getByTestId(`hotspot-${id}`).click();
+    await page.getByTestId(`exhibit-index-${id}`).click();
+    await page.waitForTimeout(750);
     await page.locator('#exhibit-title').waitFor();
     check(await page.locator('#exhibit-title').isVisible(), `Culture hotspot ${id} opens`);
     await closeDialog();
@@ -211,10 +218,10 @@ try {
   await imagesLoaded();
   check((await page.locator('.exhibit-card').count()) === 6, 'Collection shows all six exhibits');
   for (const [filter, count] of [
-    ['Xalçalar', 1],
-    ['Silahlar', 1],
-    ['Geyim', 1],
-    ['Arxeologiya', 3],
+    ['Tekstil', 1],
+    ['Silahlar', 2],
+    ['İncəsənət', 1],
+    ['Keramika', 2],
   ]) {
     await page.getByRole('button', { name: filter, exact: true }).click();
     check(
@@ -242,7 +249,7 @@ try {
     check(await page.locator('#exhibit-title').isVisible(), `Collection exhibit ${i + 1} opens`);
     await closeDialog();
   }
-  await page.locator('.exhibit-card').filter({ hasText: 'Mis qab' }).click();
+  await page.locator('.exhibit-card').filter({ hasText: 'Keramika vazası' }).click();
   await page.getByRole('button', { name: '3D-də bax' }).click();
   await page.getByTestId('model-canvas').waitFor();
   await page.locator('.model-status').waitFor({ state: 'hidden' });
@@ -251,12 +258,12 @@ try {
   await closeDialog();
   // Verify every narration asset independently of the UI's playback state.
   for (const id of [
-    'karabakh-carpet',
-    'azerbaijani-dagger',
-    'copper-vessel',
-    'traditional-dress',
-    'ancient-coin',
-    'historic-ceramic',
+    'brussels-tapestry',
+    'ceremonial-armour',
+    'ceramic-vase',
+    'marble-relief',
+    'historic-firearms',
+    'porcelain-basket',
   ])
     for (const lang of ['az', 'en']) {
       const r = await page.request.get(`${base}/audio/${id}-${lang}.mp3`);
@@ -302,7 +309,7 @@ try {
   await page.locator('.floor-room').filter({ hasText: 'mədəniyyət' }).click();
   await roomReady();
   await dragCanvas('[data-testid="panorama-viewer"]', -260);
-  await page.getByTestId('hotspot-copper-vessel').click();
+  await page.getByTestId('exhibit-index-ceramic-vase').click();
   await page.getByRole('button', { name: '3D-də bax' }).click();
   await page.getByTestId('model-canvas').waitFor();
   await page.locator('.model-status').waitFor({ state: 'hidden' });

@@ -62,7 +62,10 @@ export default function MuseumMap({
                   onClose();
                 }}
               >
-                <span className="floor-room-number">0{i + 1}</span>
+                <span className="floor-room-number">
+                  <img src={room.preview} alt="" />
+                  <b>0{i + 1}</b>
+                </span>
                 <span>
                   <strong>{t(room.name)}</strong>
                   <small>

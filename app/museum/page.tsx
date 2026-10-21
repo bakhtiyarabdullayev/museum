@@ -153,7 +153,7 @@ export default function MuseumPage() {
       </header>
       <div className="museum-top-note">
         <span className="live-dot" />{' '}
-        {t({ az: 'CANLI VİRTUAL TƏCRÜBƏ', en: 'AN IMMERSIVE VIRTUAL EXPERIENCE' })}
+        {t({ az: '360° FOTOQRAFİK MUZEY GƏZİNTİSİ', en: '360° PHOTOGRAPHIC MUSEUM TOUR' })}
       </div>
       <AnimatePresence>
         {hint && !loading && (
@@ -232,6 +232,22 @@ export default function MuseumPage() {
             </motion.h1>
           </AnimatePresence>
           <p>{t(room.subtitle)}</p>
+          <div
+            className="room-exhibit-index"
+            aria-label={t({ az: 'Bu zaldakı eksponatlar', en: 'Exhibits in this room' })}
+          >
+            {room.hotspots.map((spot, index) => (
+              <button
+                key={spot.exhibitId}
+                onClick={() => showExhibit(spot.exhibitId)}
+                disabled={loading}
+                data-testid={`exhibit-index-${spot.exhibitId}`}
+              >
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {t(getExhibit(spot.exhibitId).name)}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="room-navigation">
           <button
@@ -251,6 +267,7 @@ export default function MuseumPage() {
                 aria-label={t(r.name)}
                 aria-current={r.id === roomId ? 'step' : undefined}
               >
+                <img src={r.preview} alt="" />
                 <span />
                 <small>0{i + 1}</small>
               </button>
@@ -293,6 +310,17 @@ export default function MuseumPage() {
         </div>
       </div>
       <div className="museum-floor-line" />
+      <a
+        className="photo-credit"
+        href="https://hallwylskamuseet.se/en/"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {t({
+          az: 'Demo interyerlər: Hallwyl Museum, Stockholm',
+          en: 'Reference interiors: Hallwyl Museum, Stockholm',
+        })}
+      </a>
       {loading && (
         <div className="room-loading" role="status">
           <span className="loading-ring" />

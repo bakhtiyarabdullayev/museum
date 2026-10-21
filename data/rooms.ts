@@ -1,47 +1,118 @@
 import { Room } from './types';
 import { assetPath } from '@/lib/assetPath';
-// Equirectangular, 2:1 images. Hotspot coordinates are in radians.
-// Replace a panorama here, then adjust yaw/pitch to match the new exhibit positions.
-export const rooms: Room[] = [
+// Photographic Hallwyl Museum interiors; coordinates in radians, positive pitch looks up.
+const records: Room[] = [
   {
     id: 'entrance',
-    name: { az: 'Giriş zalı', en: 'Entrance Hall' },
-    subtitle: { az: 'Bir hekayənin başlanğıcı', en: 'The beginning of a story' },
-    panorama: assetPath('/panoramas/entrance.jpg'),
-    initialYaw: 0,
-    hotspots: [{ exhibitId: 'karabakh-carpet', yaw: -0.5, pitch: 0.08 }],
-    links: [{ roomId: 'history', yaw: 0, pitch: -0.15 }],
+    name: {
+      az: 'Giriş zalı',
+      en: 'Entrance Hall',
+    },
+    subtitle: {
+      az: 'Qobelenlər, mərmər və saray sənəti',
+      en: 'Tapestries, marble, and the art of the palace',
+    },
+    panorama: '/panoramas/entrance.jpg',
+    preview: '/panoramas/entrance-preview.jpg',
+    initialYaw: -1.94,
+    initialPitch: 0.2,
+    hotspots: [
+      {
+        exhibitId: 'brussels-tapestry',
+        yaw: -2.4936,
+        pitch: 0.4277,
+      },
+      {
+        exhibitId: 'marble-relief',
+        yaw: 0.0125,
+        pitch: 0.8886,
+      },
+    ],
+    links: [
+      {
+        roomId: 'history',
+        yaw: -1.4105,
+        pitch: -0.1,
+      },
+    ],
   },
   {
     id: 'history',
-    name: { az: 'Tarix zalı', en: 'History Hall' },
-    subtitle: { az: 'Əsrlərdən gələn izlər', en: 'Traces across the centuries' },
-    panorama: assetPath('/panoramas/history.jpg'),
-    initialYaw: 0,
+    name: {
+      az: 'Tarix zalı',
+      en: 'History Hall',
+    },
+    subtitle: {
+      az: 'Zirehlər və tarixi silahlar',
+      en: 'Centuries of metalwork and craftsmanship',
+    },
+    panorama: '/panoramas/history.jpg',
+    preview: '/panoramas/history-preview.jpg',
+    initialYaw: -0.55,
+    initialPitch: 0.08,
     hotspots: [
-      { exhibitId: 'azerbaijani-dagger', yaw: -0.58, pitch: 0.035 },
-      { exhibitId: 'ancient-coin', yaw: 0.565, pitch: 0 },
+      {
+        exhibitId: 'ceremonial-armour',
+        yaw: -1.1071,
+        pitch: -0.2984,
+      },
+      {
+        exhibitId: 'historic-firearms',
+        yaw: 0.3971,
+        pitch: 0.1309,
+      },
     ],
     links: [
-      { roomId: 'culture', yaw: 0, pitch: -0.15 },
-      { roomId: 'entrance', yaw: Math.PI, pitch: -0.25 },
+      {
+        roomId: 'culture',
+        yaw: -0.3462,
+        pitch: -0.1031,
+      },
+      {
+        roomId: 'entrance',
+        yaw: -2.9497,
+        pitch: -0.1208,
+      },
     ],
   },
   {
     id: 'culture',
-    name: { az: 'Ənənəvi mədəniyyət zalı', en: 'Traditional Culture Hall' },
-    subtitle: {
-      az: 'Əllərin yaddaşı, xalqın ruhu',
-      en: 'The memory of hands, the spirit of a people',
+    name: {
+      az: 'Ənənəvi mədəniyyət zalı',
+      en: 'Traditional Culture Hall',
     },
-    panorama: assetPath('/panoramas/culture.jpg'),
+    subtitle: {
+      az: 'Çini kolleksiyası və keramika sənəti',
+      en: 'Porcelain, ceramics, and the beauty of everyday objects',
+    },
+    panorama: '/panoramas/culture.jpg',
+    preview: '/panoramas/culture-preview.jpg',
     initialYaw: 0,
+    initialPitch: 0.06,
     hotspots: [
-      { exhibitId: 'traditional-dress', yaw: -0.64, pitch: 0.04 },
-      { exhibitId: 'copper-vessel', yaw: 0.64, pitch: 0.015 },
-      { exhibitId: 'historic-ceramic', yaw: 1.095, pitch: -0.28 },
+      {
+        exhibitId: 'ceramic-vase',
+        yaw: 0.46,
+        pitch: 0.21,
+      },
+      {
+        exhibitId: 'porcelain-basket',
+        yaw: -0.6336,
+        pitch: 0.2377,
+      },
     ],
-    links: [{ roomId: 'history', yaw: 0, pitch: -0.15 }],
+    links: [
+      {
+        roomId: 'history',
+        yaw: -2.9212,
+        pitch: -0.1,
+      },
+    ],
   },
 ];
+export const rooms = records.map((room) => ({
+  ...room,
+  panorama: assetPath(room.panorama),
+  preview: assetPath(room.preview),
+}));
 export const getRoom = (id: string) => rooms.find((room) => room.id === id)!;

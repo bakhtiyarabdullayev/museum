@@ -208,10 +208,10 @@ export default function ExhibitModal({
             </div>
           )}
           <p className="demo-caption">
-            {t({
-              az: 'Vizual və tarixi məlumatlar təqdimat üçün hazırlanmış nümunələrdir.',
-              en: 'Visuals and historical information are illustrative presentation content.',
-            })}
+            {t({ az: 'Kolleksiya mənbəyi:', en: 'Collection source:' })}{' '}
+            <a href={exhibit.source.url} target="_blank" rel="noreferrer">
+              {exhibit.source.name}
+            </a>
           </p>
         </div>
       </motion.div>

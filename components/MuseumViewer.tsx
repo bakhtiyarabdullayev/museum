@@ -19,18 +19,16 @@ type Props = {
   onRoom: (id: string) => void;
   onLoading: (loading: boolean) => void;
 };
-const eye =
-  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
 const arrow =
   '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 14 6-6 6 6"/><path d="M12 8v10"/></svg>';
 function markersFor(room: Room, language: Language): MarkerConfig[] {
   return [
-    ...room.hotspots.map(({ exhibitId, yaw, pitch }) => ({
+    ...room.hotspots.map(({ exhibitId, yaw, pitch }, index) => ({
       id: exhibitId,
       position: { yaw, pitch },
       size: { width: 44, height: 44 },
       anchor: 'center center',
-      html: `<button class="exhibit-hotspot" aria-label="${getExhibit(exhibitId).name[language]}" data-testid="hotspot-${exhibitId}"><span class="hotspot-core">${eye}</span><span class="hotspot-label">${getExhibit(exhibitId).name[language]}${getExhibit(exhibitId).model3D ? '<em>3D</em>' : ''}</span></button>`,
+      html: `<button class="exhibit-hotspot" aria-label="${getExhibit(exhibitId).name[language]}" data-testid="hotspot-${exhibitId}"><span class="hotspot-core">${String(index + 1).padStart(2, '0')}</span><span class="hotspot-label">${getExhibit(exhibitId).name[language]}${getExhibit(exhibitId).model3D ? '<em>3D</em>' : ''}</span></button>`,
       data: { kind: 'exhibit', id: exhibitId },
     })),
     ...room.links.map(({ roomId, yaw, pitch }) => ({
@@ -64,7 +62,7 @@ const MuseumViewer = forwardRef<MuseumViewerHandle, Props>(function MuseumViewer
       reset: () => {
         viewer.current?.animate({
           yaw: latest.current.room.initialYaw,
-          pitch: 0,
+          pitch: latest.current.room.initialPitch,
           zoom: 35,
           speed: 600,
         });
@@ -94,10 +92,10 @@ const MuseumViewer = forwardRef<MuseumViewerHandle, Props>(function MuseumViewer
           panorama: initial.room.panorama,
           navbar: false,
           defaultYaw: initial.room.initialYaw,
-          defaultPitch: 0,
+          defaultPitch: initial.room.initialPitch,
           defaultZoomLvl: 35,
-          minFov: 35,
-          maxFov: 105,
+          minFov: 45,
+          maxFov: 95,
           mousewheel: true,
           touchmoveTwoFingers: false,
           loadingTxt: '',
@@ -159,7 +157,7 @@ const MuseumViewer = forwardRef<MuseumViewerHandle, Props>(function MuseumViewer
         try {
           const completed = await v.setPanorama(props.room.panorama, {
             transition: { speed: 750 },
-            position: { yaw: props.room.initialYaw, pitch: 0 },
+            position: { yaw: props.room.initialYaw, pitch: props.room.initialPitch },
             zoom: 35,
           });
           if (cancelled || !completed) return;

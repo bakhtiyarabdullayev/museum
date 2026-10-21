@@ -34,7 +34,7 @@ jobs:
           publish_branch: gh-pages
       - name: Check public website
         run: |
-          for path in '' 'museum/' 'collection/' 'panoramas/entrance.jpg' 'models/bronze-vessel.glb'; do
+          for path in '' 'museum/' 'collection/' 'panoramas/entrance.jpg' 'models/ceramic-vase.glb'; do
             curl --fail --silent --show-error --retry 12 --retry-delay 5 --retry-all-errors \
               --output /dev/null "https://bakhtiyarabdullayev.github.io/museum/${path}"
           done

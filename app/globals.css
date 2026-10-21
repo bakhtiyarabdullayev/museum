@@ -1013,23 +1013,39 @@ svg {
 }
 .room-navigation-dots {
   display: flex;
-  gap: 21px;
+  gap: 9px;
 }
 .room-navigation-dots button {
-  padding: 4px;
+  padding: 3px;
   background: none;
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: center;
   color: #e0d7c185;
+  position: relative;
+  border: 1px solid transparent;
+  transition:
+    border-color 0.2s,
+    opacity 0.2s;
+}
+.room-navigation-dots button img {
+  width: 64px;
+  height: 43px;
+  object-fit: cover;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+.room-navigation-dots button.active,
+.room-navigation-dots button:hover {
+  border-color: #c7a97d;
+}
+.room-navigation-dots button.active img,
+.room-navigation-dots button:hover img {
+  opacity: 1;
 }
 .room-navigation-dots button > span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #d4c7ae66;
-  position: relative;
+  display: none;
 }
 .room-navigation-dots button.active > span {
   background: #e2c897;
@@ -1044,6 +1060,11 @@ svg {
 .room-navigation-dots small {
   font-size: 7px;
   letter-spacing: 0.5px;
+  position: absolute;
+  bottom: 6px;
+  left: 7px;
+  color: white;
+  text-shadow: 0 1px 4px #000;
 }
 .room-navigation-dots button.active {
   color: #e6dbc3;
@@ -1192,6 +1213,9 @@ svg {
   transition:
     background 0.2s,
     transform 0.2s;
+  font-size: 10px;
+  font-family: var(--sans);
+  letter-spacing: 1px;
 }
 .hotspot-core:before {
   content: '';
@@ -1199,7 +1223,7 @@ svg {
   inset: 0;
   border: 1px solid #fff4d453;
   border-radius: 50%;
-  animation: hotspot-pulse 3.5s ease-out infinite;
+  animation: hotspot-pulse 5s ease-out infinite;
 }
 .exhibit-hotspot:hover .hotspot-core,
 .exhibit-hotspot:focus-visible .hotspot-core {
@@ -1717,10 +1741,11 @@ svg {
 .model-header h2 {
   font-size: 37px;
   margin-top: 12px;
+  color: #f1e8d8;
 }
 .model-period {
   display: block;
-  color: var(--muted);
+  color: #bfb5a5;
   font-size: 10px;
   margin-top: 4px;
 }
@@ -1732,7 +1757,7 @@ svg {
   position: absolute;
   inset: 0 0 91px;
   touch-action: none;
-  background: radial-gradient(ellipse at 50% 56%, #f7f3eb 0, #ebe4d9 80%);
+  background: #1b1e1b;
   cursor: grab;
 }
 .model-stage:active {
@@ -2890,5 +2915,87 @@ svg {
     grid-row: 2;
     margin-left: 0;
     justify-self: start;
+  }
+}
+
+/* Discreet catalog navigation inside the photographic tour. */
+.room-exhibit-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 14px;
+  margin-top: 13px;
+}
+.room-exhibit-index button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  color: #e8e0ce;
+  font-size: 9px;
+  padding: 3px 0;
+  pointer-events: auto;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.room-exhibit-index button span {
+  color: #c8ad7e;
+  font-size: 8px;
+}
+.room-exhibit-index button:hover {
+  color: white;
+  border-color: #c8ad7e;
+}
+.photo-credit {
+  position: absolute;
+  bottom: 12px;
+  left: 36px;
+  font-size: 8px;
+  letter-spacing: 0.35px;
+  color: #d7ceba96;
+}
+.photo-credit:hover {
+  color: #f4ead6;
+}
+.floor-room-number {
+  position: relative;
+  width: 70px;
+  height: 55px;
+  flex-shrink: 0;
+}
+.floor-room-number img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+}
+.floor-room-number b {
+  position: absolute;
+  bottom: 3px;
+  left: 6px;
+  color: #fff6e4;
+  font: 11px var(--sans);
+}
+.demo-caption a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 650px) {
+  .photo-credit {
+    left: 20px;
+    bottom: 8px;
+    font-size: 6px;
+  }
+  .room-exhibit-index {
+    gap: 5px 14px;
+    margin-top: 9px;
+  }
+  .room-exhibit-index button {
+    font-size: 8px;
+  }
+  .floor-room-number {
+    width: 51px;
+    height: 48px;
   }
 }

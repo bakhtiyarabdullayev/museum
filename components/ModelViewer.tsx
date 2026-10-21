@@ -38,7 +38,7 @@ export default function ModelViewer({
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(element.clientWidth, element.clientHeight);
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.4;
+        renderer.toneMappingExposure = 0.85;
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.domElement.setAttribute(
           'aria-label',
@@ -73,15 +73,20 @@ export default function ModelViewer({
         const environmentScene = new RoomEnvironment();
         const env = pmrem.fromScene(environmentScene, 0.04);
         scene.environment = env.texture;
+        scene.environmentIntensity = 0.65;
         environmentScene.dispose();
         pmrem.dispose();
-        const key = new THREE.DirectionalLight(0xffedd0, 3);
+        const key = new THREE.DirectionalLight(0xffedd0, 1.8);
         key.position.set(-3, 5, 4);
         scene.add(key);
-        scene.add(new THREE.AmbientLight(0xfff3e3, 0.7));
+        scene.add(new THREE.AmbientLight(0xfff3e3, 0.35));
+        // The panorama library can disable shared Three.js color management.
+        // Match the unlit studio floor to its CSS background in either mode.
+        const floorColor = new THREE.Color(0x1b1e1b);
+        if (!THREE.ColorManagement.enabled) floorColor.convertSRGBToLinear();
         const floor = new THREE.Mesh(
-          new THREE.CircleGeometry(1.5, 64),
-          new THREE.MeshStandardMaterial({ color: 0xe5ddcf, roughness: 0.95, metalness: 0 }),
+          new THREE.PlaneGeometry(200, 200),
+          new THREE.MeshBasicMaterial({ color: floorColor, toneMapped: false }),
         );
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -0.035;
@@ -116,6 +121,14 @@ export default function ModelViewer({
               });
               return;
             }
+            // Frame externally sourced artifacts consistently, regardless of their units.
+            const bounds = new THREE.Box3().setFromObject(gltf.scene);
+            const size = bounds.getSize(new THREE.Vector3());
+            gltf.scene.scale.multiplyScalar(1.5 / Math.max(size.x, size.y, size.z));
+            gltf.scene.updateMatrixWorld(true);
+            bounds.setFromObject(gltf.scene);
+            const center = bounds.getCenter(new THREE.Vector3());
+            gltf.scene.position.sub(new THREE.Vector3(center.x, bounds.min.y, center.z));
             scene.add(gltf.scene);
             setLoading(false);
           },
@@ -287,12 +300,16 @@ export default function ModelViewer({
             {t({ az: 'Eksponata qayıt', en: 'Back to exhibit' })}
           </button>
         </div>
-        <span className="model-demo-note">
-          {t({
-            az: 'Təqdimat üçün hazırlanmış 3D nümunə',
-            en: 'Illustrative 3D model for this presentation',
-          })}
-        </span>
+        {exhibit.modelSource && (
+          <a
+            className="model-demo-note"
+            href={exhibit.modelSource.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t({ az: '3D mənbə:', en: '3D source:' })} {exhibit.modelSource.name}
+          </a>
+        )}
       </motion.div>
     </motion.div>
   );

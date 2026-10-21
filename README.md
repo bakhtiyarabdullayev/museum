@@ -51,15 +51,15 @@ Choose your account/team when prompted. Vercel can assign `museum.vercel.app` on
 ## A 2–3 minute presentation
 
 1. Start on `/` and choose **Virtual muzeyə daxil ol**.
-2. Drag to look around the entrance hall. Select the pulsing carpet hotspot.
+2. Drag to look around the real photographic entrance hall. Select the numbered tapestry hotspot.
 3. Open **Ətraflı bax** or play its **Audio hekayə**.
 4. Close the panel and select the floating **Tarix zalı** arrow in the doorway.
-5. Visit **Ənənəvi mədəniyyət zalı**. Select **Mis qab**, then **3D-də bax**.
-6. Drag the bronze vessel to rotate it, scroll/pinch to zoom, and use the reset icon.
+5. Visit **Ənənəvi mədəniyyət zalı**. Select **Keramika vazası**, then **3D-də bax**.
+6. Drag the textured ceramic vase to rotate it, scroll/pinch to zoom, and use the reset icon.
 7. Return to the room and open **Xəritə** to travel between all three halls.
 8. Use the collection icon to open `/collection` and demonstrate filters.
 
-Alternatively, **Bələdçili tur** guides you through the carpet, dagger, and 3D vessel, with three progress steps. Major UI elements, exhibit stories, and narration support AZ/EN. Your language choice persists locally.
+Alternatively, **Bələdçili tur** guides you through the tapestry, armour, and 3D vase, with three progress steps. Major UI elements, exhibit stories, and narration support AZ/EN. Your language choice persists locally. The room's exhibit index also opens each photographed object directly.
 
 ## Replace demo content
 
@@ -68,7 +68,7 @@ Alternatively, **Bələdçili tur** guides you through the carpet, dagger, and 3
 - `data/types.ts`: shared TypeScript types.
 - `public/panoramas/`: **2:1 equirectangular** 360° JPEGs. Replace these with real museum photography, then adjust marker `yaw` and `pitch` in radians in the room configuration. Zero yaw looks toward the center of the image; positive pitch looks up.
 - `public/exhibits/`: exhibit images. Keep the listed filenames or update the data.
-- `public/models/bronze-vessel.glb`: a real local GLB. Replace it and update the relevant exhibit's model path. The current viewer is framed for a meter-scale object centered on the origin with its base at y=0. For other models, normalize the export or update the camera/target in `components/ModelViewer.tsx`.
+- `public/models/ceramic-vase.glb`: a locally bundled, textured Poly Haven asset. The viewer automatically centers and scales imported models to fit its presentation stage.
 - `public/audio/`: local Azerbaijani/English narration and an optional ambient bed. Narration paths follow `{exhibit-id}-{az|en}.mp3`.
 
 Photo Sphere Viewer renders the full 360° panoramas and spatial hotspots. Three.js renders the artifact with orbit controls, local environment lighting, zoom limits, and camera reset. Framer Motion animates transitions and dialogs. Tailwind CSS v4 is available alongside the museum's visual styles in `app/globals.css`.
@@ -89,6 +89,6 @@ The test automatically uses `/usr/bin/chromium` when available. Set `CHROMIUM_PA
 
 ## Demo assets and scope
 
-The interiors, six artifact images, and ornamental bronze vessel were originally rendered for this prototype. The carpet pattern and artifact forms are illustrative interpretations, **not verified scans of a museum's collection**. Dates and descriptions are demonstration content. Narration was synthesized locally with eSpeak NG; the ambient audio is an original generated sound bed. Use approved museum photographs, research, recordings, and scans for a real institutional presentation.
+The virtual tour uses photographic Hallwyl Museum interiors, real photographed collection objects, and a textured Poly Haven ceramic vase. These are international reference assets for an Azerbaijani-language demo. The model is a separate 3D reference, identified in the viewer. See [ASSET_CREDITS.md](ASSET_CREDITS.md) for sources and processing details. Narration matches the new collection and was synthesized locally with eSpeak NG.
 
 This prototype deliberately contains no authentication, payments, administration, CMS, analytics, or backend. It can be extended by adding data and replacing assets without redesigning the frontend.

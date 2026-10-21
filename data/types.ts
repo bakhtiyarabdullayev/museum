@@ -1,6 +1,6 @@
 export type Language = 'az' | 'en';
 export type Localized = Record<Language, string>;
-export type Category = 'carpets' | 'weapons' | 'clothing' | 'archaeology';
+export type Category = 'carpets' | 'weapons' | 'arts' | 'archaeology';
 export type Exhibit = {
   id: string;
   name: Localized;
@@ -12,6 +12,8 @@ export type Exhibit = {
   image: string;
   model3D?: string;
   roomId: string;
+  source: { name: string; url: string };
+  modelSource?: { name: string; url: string };
 };
 export type Hotspot = { exhibitId: string; yaw: number; pitch: number };
 export type Room = {
@@ -20,6 +22,8 @@ export type Room = {
   subtitle: Localized;
   panorama: string;
   initialYaw: number;
+  initialPitch: number;
+  preview: string;
   hotspots: Hotspot[];
   links: { roomId: string; yaw: number; pitch: number }[];
 };
